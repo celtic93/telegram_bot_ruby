@@ -1,1 +1,1 @@
-web: ruby poller.rb
+web: bin/app
