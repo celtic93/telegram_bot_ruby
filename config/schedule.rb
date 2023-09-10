@@ -3,5 +3,5 @@
 set :output, 'log/application.log'
 
 every 1.minute do
-  rake 'hello'
+  rake 'match_parser:live'
 end

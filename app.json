@@ -1,0 +1,8 @@
+{
+  "cron": [
+    {
+      "command": "/bin/bash -l -c 'cd /Users/admin/projects/telegram_bot_ruby && RAILS_ENV=production bundle exec rake match_parser:live --silent >> log/application.log 2>&1'",
+      "schedule": "* * * * *"
+    }
+  ]
+}
