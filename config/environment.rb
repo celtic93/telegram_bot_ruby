@@ -7,6 +7,3 @@ Bundler.require(:default, ENV['RACK_ENV'])
 
 require_relative 'application_loader'
 ApplicationLoader.load_app!
-
-require_relative 'bot_poller'
-BotPoller.start!
