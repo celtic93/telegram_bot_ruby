@@ -5,7 +5,6 @@ require_relative '../../config/environment'
 desc 'Gets results from website'
 namespace :match_parser do
   task :live do
-    bot = Telegram::Bot::Client.new(ENV['TELEGRAM_TOKEN'])
-    bot.send_message(chat_id: '-960187715', text: 'Text')
+    Telegram.bot.send_message(chat_id: ENV['TELEGRAM_CHAT_ID'], text: 'Text')
   end
 end
