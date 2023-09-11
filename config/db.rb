@@ -19,7 +19,7 @@ module DB
 
   def clean
     schema = JSON.parse(File.read(SCHEMA_FILE_PATH))
-    File.write(DATA_FILE_PATH, schema)
+    File.write(DATA_FILE_PATH, schema.to_json)
     true
   end
 end
