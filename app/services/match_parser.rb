@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MatchParser
   def check_score(link)
     uri = "#{ENV['LIVE_SCORES_WEBSITE']}#{link}"
