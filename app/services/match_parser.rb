@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class MatchParser
-  def check_score(link)
-    uri = "#{ENV['LIVE_SCORES_WEBSITE']}#{link}"
+  LIVE_SCORES_WEBSITE = 'https://www.livesoccertv.com/match/'
+
+  def create_match(link_path)
+    uri = "#{LIVE_SCORES_WEBSITE}#{link_path}"
     page = Nokogiri::HTML(URI.parse(uri).open)
 
     home_team = page.css('#team > a')[0].text
     guest_team = page.css('#team > a')[1].text
     result = page.css('#result')[0]&.text
-    status = page.css('#status')[0]&.text
+    status = page.css('#status')[0]&.text || MatchMonitor::MATCH_ENDED_STATUS if page.css('#warning').any?
 
     Result.new(home_team, guest_team, result, status)
   end
