@@ -5,4 +5,8 @@ class WebhooksController < Telegram::Bot::UpdatesController
     result = MatchCreator.new.extract_links(links)
     respond_with :message, text: result.message
   end
+
+  def clean!
+    respond_with :message, text: 'Данные удалены' if DB.clean
+  end
 end
