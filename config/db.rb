@@ -24,8 +24,24 @@ module DB
     true
   end
 
+  def create_prediction(id, index, result)
+    data = read
+    data[:predictions][id.to_s.to_sym][:results][index] = result
+    write(data)
+    true
+  end
+
+  def matches_started?
+    matches = read[:matches]
+    matches.map { |match| DateTime.parse(match[:date_time]) }.any? { |date_time| Time.zone.now > date_time }
+  end
+
   def clean
-    schema = JSON.parse(File.read(SCHEMA_FILE_PATH))
+    schema = JSON.parse(File.read(SCHEMA_FILE_PATH)).deep_symbolize_keys
+    JSON.parse(ENV['PLAYERS_INFO_ARRAY']).each do |player|
+      schema[:predictions][player['id']] = { name: player['name'], results: [] }
+    end
+
     File.write(DATA_FILE_PATH, schema.to_json)
     true
   end
