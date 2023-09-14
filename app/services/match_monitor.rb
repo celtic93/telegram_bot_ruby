@@ -3,6 +3,7 @@ class MatchMonitor
 
   def check_score(match)
     result = Result.new
+    show_table = false
 
     date_time_now = Time.zone.now
     match_date_time = DateTime.parse(match[:date_time])
@@ -16,15 +17,26 @@ class MatchMonitor
     if match[:status].nil? && parser_result.status.present? && parser_result.status != MATCH_ENDED_STATUS
       messages_array.push('Матч начался')
     end
-    messages_array.push('Изменение в счете') if match[:result].present? && match[:result] != parser_result.result
-    messages_array.push('Матч закончился') if parser_result.status == MATCH_ENDED_STATUS
+    if match[:result].present? && match[:result] != parser_result.result
+      messages_array.push('Изменение в счете')
+      show_table = true
+    end
+    if parser_result.status == MATCH_ENDED_STATUS
+      messages_array.push('Матч закончился')
+      show_table = true
+    end
 
     if messages_array.any?
       messages_array.push("#{parser_result.home_team} - #{parser_result.guest_team}")
       messages_array.push(parser_result.result)
-      result.message = messages_array.join("\n")
     end
 
+    if show_table
+      table_result = TablePresenter.new.calculate_points
+      messages_array.push(table_result.message)
+    end
+
+    result.message = messages_array.join("\n")
     result
   end
 
