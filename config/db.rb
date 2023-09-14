@@ -36,6 +36,10 @@ module DB
     matches.map { |match| DateTime.parse(match[:date_time]) }.any? { |date_time| Time.zone.now > date_time }
   end
 
+  def matches_empty?
+    read[:matches].empty?
+  end
+
   def clean
     schema = JSON.parse(File.read(SCHEMA_FILE_PATH)).deep_symbolize_keys
     JSON.parse(ENV['PLAYERS_INFO_ARRAY']).each do |player|

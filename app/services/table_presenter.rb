@@ -15,7 +15,7 @@ class TablePresenter
       points = 0
 
       data[:matches].each_with_index do |match, index|
-        next if match[:result].nil? || prediction[:results][index].nil?
+        next if match[:result].nil? || match[:status].nil? || prediction[:results][index].nil?
 
         match_score_array = match[:result].split(' - ').map(&:to_i)
         prediction_array = prediction[:results][index].split('-').map(&:to_i)
