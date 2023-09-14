@@ -3,7 +3,7 @@
 class MatchParser
   LIVE_SCORES_WEBSITE = 'https://www.livesoccertv.com/match/'
 
-  def create_match(link_path)
+  def extract_link(link_path)
     uri = "#{LIVE_SCORES_WEBSITE}#{link_path}"
     page = Nokogiri::HTML(URI.parse(uri).open)
 

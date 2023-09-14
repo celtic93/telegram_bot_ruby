@@ -2,7 +2,7 @@
 
 class WebhooksController < Telegram::Bot::UpdatesController
   def add!(*links)
-    result = MatchCreator.new.extract_links(links)
+    result = MatchCreator.new.create_match(links)
     respond_with :message, text: result.message
   end
 

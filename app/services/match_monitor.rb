@@ -10,7 +10,7 @@ class MatchMonitor
     return result if date_time_now < match_date_time || match[:status] == MATCH_ENDED_STATUS
 
     messages_array = []
-    parser_result = MatchParser.new.create_match(match[:link_path])
+    parser_result = MatchParser.new.extract_link(match[:link_path])
     DB.update_match(match[:link_path], result: parser_result.result, status: parser_result.status)
 
     if match[:status].nil? && parser_result.status.present? && parser_result.status != MATCH_ENDED_STATUS

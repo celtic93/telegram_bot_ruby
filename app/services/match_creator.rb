@@ -1,5 +1,5 @@
 class MatchCreator
-  def extract_links(match_array)
+  def create_match(match_array)
     result = Result.new
 
     if match_array.empty?
@@ -12,7 +12,7 @@ class MatchCreator
     match_array.each do |match|
       date_time, link_path = match.split('_')
       date_time = DateTime.parse("#{date_time} #{Time.zone}")
-      parser_result = MatchParser.new.create_match(link_path)
+      parser_result = MatchParser.new.extract_link(link_path)
 
       data = DB.read
       data[:matches].push(
