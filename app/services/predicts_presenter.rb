@@ -8,13 +8,14 @@ class PredictsPresenter
     data = DB.read
 
     data[:matches].each_with_index do |match, index|
-      messages_array.push("#{match[:home_team]} - #{match[:guest_team]} #{match[:result]} #{match[:status]}")
-      data[:predictions].each_value do |prediction|
-        messages_array.push("#{prediction[:name]} #{prediction[:results][index]}")
-      end
+      match_array = []
+      match_array.push("#{match[:home_team]} - #{match[:guest_team]} #{match[:result]} #{match[:status]}")
+      predictions_array = data[:predictions].values.map { |pred| "#{pred[:name]} #{pred[:results][index]}" }
+      match_array.push(predictions_array.join(' | '))
+      messages_array.push(match_array.join("\n"))
     end
 
-    result.message = messages_array.join("\n")
+    result.message = messages_array.join("\n\n")
     result
   end
 
